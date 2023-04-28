@@ -1,42 +1,20 @@
-#include <stdio.h>
 #include <stdlib.h>
+#include "lists.h"
 
-struct node {
-    int data;
-    struct node *next;
-};
+/**
+ * list_len - returns the number of elements in a linked list
+ * @h: pointer to the list_t list
+ *
+ * Return: number of elements in h
+ */
+size_t list_len(const list_t *h)
+{
+ size_t n = 0;
 
-int list_len(struct node *head) {
-    int len = 0;
-    struct node *current = head;
-
-    while (current != NULL) {
-        len++;
-        current = current->next;
-    }
-
-    return len;
-}
-
-int main() {
-    struct node *head = NULL;
-    struct node *second = NULL;
-    struct node *third = NULL;
-
-    head = (struct node*)malloc(sizeof(struct node));
-    second = (struct node*)malloc(sizeof(struct node));
-    third = (struct node*)malloc(sizeof(struct node));
-
-    head->data = 1;
-    head->next = second;
-
-    second->data = 2;
-    second->next = third;
-
-    third->data = 3;
-    third->next = NULL;
-
-    printf("Length of the linked list is %d\n", list_len(head));
-
-    return 0;
+ while (h)
+ {
+ n++;
+ h = h->next;
+ }
+ return (n);
 }
