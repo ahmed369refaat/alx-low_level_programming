@@ -1,17 +1,42 @@
+#include <stdio.h>
 #include <stdlib.h>
-#include "lists.h"
 
-/**
- * list_len_recursion - returns the number of elements in a linked list
- * using recursion
- * @h: pointer to the list_t list
- *
- * Return: number of elements in h
- */
-size_t list_len_recursion(const list_t *h)
-{
-  if (h == NULL) /* base case */
+struct node {
+    int data;
+    struct node *next;
+};
+
+int list_len(struct node *head) {
+    int len = 0;
+    struct node *current = head;
+
+    while (current != NULL) {
+        len++;
+        current = current->next;
+    }
+
+    return len;
+}
+
+int main() {
+    struct node *head = NULL;
+    struct node *second = NULL;
+    struct node *third = NULL;
+
+    head = (struct node*)malloc(sizeof(struct node));
+    second = (struct node*)malloc(sizeof(struct node));
+    third = (struct node*)malloc(sizeof(struct node));
+
+    head->data = 1;
+    head->next = second;
+
+    second->data = 2;
+    second->next = third;
+
+    third->data = 3;
+    third->next = NULL;
+
+    printf("Length of the linked list is %d\n", list_len(head));
+
     return 0;
-  else /* recursive case */
-    return 1 + list_len_recursion(h->next);
 }
