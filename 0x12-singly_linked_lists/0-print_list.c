@@ -1,25 +1,60 @@
+#include <stdarg.h>
 #include <stdio.h>
-#include "lists.h"
+#include "holberton.h"
 
 /**
- * print_list - prints all the elements of a linked list
- * @h: pointer to the list_t list to print
+ * _printf - prints output according to a format
+ * @format: character string containing format specifiers
  *
- * Return: the number of nodes printed
+ * Return: number of characters printed (excluding null byte used to end output
+ * to strings), or -1 if an error occurs
  */
-size_t print_list(const list_t *h)
+int _printf(const char *format, ...)
 {
- size_t s = 0;
+	va_list args;
+	int printed_chars = 0;
+	char *s;
 
- while (h)
- {
- if (!h->str)
- printf("[0] (nil)\n");
- else
- printf("[%u] %s\n", h->len, h->str);
- h = h->next;
- s++;
- }
+	va_start(args, format);
 
- return (s);
+	if (format == NULL)
+		return (-1);
+
+	while (*format != '\0')
+	{
+		if (*format == '%')
+		{
+			format++;
+
+			switch (*format)
+			{
+			case 'c':
+				printed_chars += _putchar(va_arg(args, int));
+				break;
+			case 's':
+				s = va_arg(args, char *);
+				if (s == NULL)
+					s = "(null)";
+				printed_chars += _puts(s);
+				break;
+			case '%':
+				printed_chars += _putchar('%');
+				break;
+			default:
+				printed_chars += _putchar('%');
+				printed_chars += _putchar(*format);
+				break;
+			}
+		}
+		else
+		{
+			printed_chars += _putchar(*format);
+		}
+
+		format++;
+	}
+
+	va_end(args);
+
+	return (printed_chars);
 }
